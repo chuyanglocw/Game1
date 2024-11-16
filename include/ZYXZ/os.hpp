@@ -8,6 +8,10 @@
 OS保存应用 window renderer event 等信息为其他文件公用
 */
 
+typedef SDL_Point Point;
+typedef SDL_Rect Rect;
+typedef SDL_Color Color;
+
 #define FPS 60
 #define DELTA (1000 / FPS)
 #define WINDOWPOS SDL_WINDOWPOS_CENTERED
@@ -26,4 +30,5 @@ public:
     static SDL_Event event;
     static ResourceManager resourceManager;
     static ObjectManager objectManager;
+    static void Destroy();
 };

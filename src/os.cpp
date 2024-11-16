@@ -11,3 +11,8 @@ SDL_Renderer *OS::renderer = nullptr;
 SDL_Event OS::event;
 ResourceManager OS::resourceManager;
 ObjectManager OS::objectManager;
+
+void OS::Destroy(){
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+}

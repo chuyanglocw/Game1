@@ -1,12 +1,14 @@
 #pragma once
 
 #include "common.hpp"
-#include "math.hpp"
 #include "os.hpp"
+#include "math.hpp"
 #include "resource_manager.hpp"
 
 class Game{
 public:
+    Color bkColor = {255,255,255,255};
+    bool isRunning = true;
     Game();
     ~Game();
     virtual void run();
