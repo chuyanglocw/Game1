@@ -6,11 +6,17 @@
 
 class ResourceManager{
 public:
-    std::unordered_map<std::string,SDL_Texture *> textures;
+    
     ResourceManager();
     ~ResourceManager();
     //Texture资源
+    std::unordered_map<std::string,SDL_Texture *> textures;
     SDL_Texture *loadTextureBMP(std::string path);
     SDL_Texture *loadTexturePNG(std::string path);
     void removeTexture(std::string path);
+
+    //Font资源
+    std::unordered_map<std::string,TTF_Font *> fonts;
+    TTF_Font *loadFont(std::string path, int size);
+    void removeFont(std::string path);
 };

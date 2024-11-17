@@ -1,16 +1,22 @@
 #pragma once
-#define OS_FEATURE "WINDOWS"
+#define OS_FEATURE 1
 #include "common.hpp"
 
 /*
+
+OS_FEATURE: 1:windows 2:android
+
 应用基本信息
 
 OS保存应用 window renderer event 等信息为其他文件公用
 */
 
+
 typedef SDL_Point Point;
 typedef SDL_Rect Rect;
 typedef SDL_Color Color;
+typedef SDL_Surface Surface;
+typedef SDL_Texture Texture;
 
 #define FPS 60
 #define DELTA (1000 / FPS)
@@ -21,6 +27,7 @@ typedef SDL_Color Color;
 
 class ResourceManager;
 class ObjectManager;
+class RenderManager;
 
 class OS{
 public:
@@ -30,5 +37,6 @@ public:
     static SDL_Event event;
     static ResourceManager resourceManager;
     static ObjectManager objectManager;
+    static RenderManager renderManager;
     static void Destroy();
 };

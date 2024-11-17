@@ -4,7 +4,7 @@ objs = $(patsubst src/%.cpp,objs/%.o,$(cpps))
 
 include_dirs = -Iinclude/SDL2 -Iinclude/ZYXZ
 
-libs = -lSDL2 -lSDL2_image
+libs = -lSDL2 -lSDL2_image -lSDL2_ttf
 
 libs_dir = -Lbin
 
