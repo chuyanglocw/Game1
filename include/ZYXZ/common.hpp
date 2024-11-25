@@ -1,4 +1,8 @@
 #pragma once
+/*
+* common.hpp
+* 一些通用的头文件
+*/
 #include <iostream>
 #include <random>
 #include <cmath>

@@ -1,5 +1,22 @@
 #pragma once
 #include "common.hpp"
+
+
+namespace cyMath
+{
+    double min(double a, double b);
+    double max(double a, double b);
+} // namespace cyMath
+
+
+class Math{
+public:
+    static double PI;
+    static double E;
+    static double RAD;
+    static double DEG;
+};
+
 class Vector{
     public:
     float x, y;
@@ -27,10 +44,47 @@ class Vector{
     int getIntY(const float &ex = 1);
 };
 
-class Math{
-public:
-    static double PI;
-    static double E;
-    static double RAD;
-    static double DEG;
+//圆形碰撞检测
+class Circle{
+    public:
+    Vector pos;
+    double r;
+    Circle(Vector pos, double r);
+    Circle();
+    bool isCollide(Circle &c);
+    bool isCollide(Vector &v);
+};
+
+//方形碰撞检测
+class Box{
+    public:
+    Vector pos;
+    Vector size;
+    Box(Vector pos, Vector size);
+    Box();
+    bool isCollide(Box &box);
+    bool isCollide(Vector &v);
+};
+
+//三角形碰撞检测
+class Triangle{
+    public:
+    Vector a, b, c;
+    Triangle(Vector a, Vector b, Vector c);
+    Triangle();
+    bool isCollide(Triangle &t);
+    bool isCollide(Vector &v);
+};
+
+//多边形碰撞检测
+class Polygon{
+    public:
+    std::vector<Vector> points;
+    Polygon(std::vector<Vector> points);
+    Polygon();
+    void addPoint(Vector v);
+    void removePoint(Vector v);
+    bool isFormedPolygon();
+    bool isCollide(Polygon &p);
+    bool isCollide(Vector &v);
 };

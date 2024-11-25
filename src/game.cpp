@@ -4,8 +4,9 @@ Game::Game(){}
 
 Game::~Game(){}
 
-Rect rect = {0,0,100,100};
 
+//用于Test cllback 测试
+Rect rect = {0,0,100,100};
 
 //Test 是用于测试 Object 类的测试类 继承自 Object 类
 class Test : public Object{
@@ -24,6 +25,75 @@ public:
     }
     void dispose(){}
 };
+
+// 用于测试 Triangle 类的测试类 继承自 Object 类 用于测试碰撞检测
+class Test2 : public Object{
+    public:
+    Triangle *triangle;
+    Test2(ObjectManager *objectManager) : Object(objectManager){
+        triangle = new Triangle(Vector(0,40),Vector(100,0),Vector(0,100));
+    }
+    ~Test2(){
+        delete triangle;
+    }
+    void draw(){
+        SDL_SetRenderDrawColor(OS::renderer,255,0,0,255);
+        SDL_RenderDrawLine(OS::renderer,triangle->a.x,triangle->a.y,triangle->b.x,triangle->b.y);
+        SDL_RenderDrawLine(OS::renderer,triangle->b.x,triangle->b.y,triangle->c.x,triangle->c.y);
+        SDL_RenderDrawLine(OS::renderer,triangle->c.x,triangle->c.y,triangle->a.x,triangle->a.y);
+    }
+    void update(){}
+    void init(){}
+    void callback(){
+        std::cout << "collide" << std::endl;
+    }
+    void handleEvent(){
+        Vector mousePosition = Vector(OS::event.button.x,OS::OS::event.button.y);
+        if (triangle->isCollide(mousePosition)){
+            callback();
+        }
+    }
+    void dispose(){}
+};
+
+// 用于测试 Polygon 类的测试类 继承自 Object 类 用于测试碰撞检测
+class Test3 : public Object{
+    public:
+    Polygon *polygon;
+    Test3(ObjectManager *objectManager) : Object(objectManager){
+        polygon = new Polygon();
+        polygon->addPoint(Vector(0,0));
+        polygon->addPoint(Vector(100,0));
+        polygon->addPoint(Vector(100,100));
+        polygon->addPoint(Vector(40,100));
+        polygon->addPoint(Vector(0,20));
+    }
+    ~Test3(){
+        delete polygon;
+    }
+    void draw(){
+        SDL_SetRenderDrawColor(OS::renderer,0,255,0,255);
+        SDL_RenderDrawLine(OS::renderer,polygon->points[0].x,polygon->points[0].y,polygon->points[1].x,polygon->points[1].y);
+        SDL_RenderDrawLine(OS::renderer,polygon->points[1].x,polygon->points[1].y,polygon->points[2].x,polygon->points[2].y);
+        SDL_RenderDrawLine(OS::renderer,polygon->points[2].x,polygon->points[2].y,polygon->points[3].x,polygon->points[3].y);
+        SDL_RenderDrawLine(OS::renderer,polygon->points[3].x,polygon->points[3].y,polygon->points[4].x,polygon->points[4].y);
+        SDL_RenderDrawLine(OS::renderer,polygon->points[4].x,polygon->points[4].y,polygon->points[0].x,polygon->points[0].y);
+    }
+    void update(){}
+    void init(){}
+    void callback(){
+        std::cout << "Polygon collide" << std::endl;
+    }
+    void handleEvent(){
+        Vector mousePosition = Vector(OS::event.button.x,OS::OS::event.button.y);
+        if (polygon->isCollide(mousePosition)){
+            callback();
+        }
+    }
+    void dispose(){}
+};
+
+
 //——————————————————————————————————————————
 
 void Game::init(){
@@ -37,9 +107,16 @@ void Game::init(){
     Test *objecta = new Test(&OS::objectManager);
     objecta->include = 1;
     OS::inputManager.addlistener(objecta);
+    Test2 *objectb = new Test2(&OS::objectManager);
+    objectb->include = 1;
+    OS::inputManager.addlistener(objectb);
+    Test3 *objectc = new Test3(&OS::objectManager);
+    objectc->include = 1;
+    OS::inputManager.addlistener(objectc);
 }
 
 void Game::run(){
+    OS::objectManager.clear();
     SDL_Init(SDL_INIT_EVERYTHING);
     TTF_Init();
     init();
@@ -70,6 +147,8 @@ void Game::render(){
 
     //测试 渲染管理器 渲染对象 渲染图片
     OS::renderManager.drawTexture(OS::resourceManager.loadTexturePNG("assets/grass.png"),&rect);
+    OS::objectManager.get(1)->draw();
+    OS::objectManager.get(2)->draw();
 
     SDL_RenderPresent(OS::renderer);
 }
