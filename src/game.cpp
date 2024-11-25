@@ -36,7 +36,7 @@ void Game::init(){
     //测试 对象管理器 添加对象
     Test *objecta = new Test(&OS::objectManager);
     objecta->include = 1;
-    OS::inputManager.addlisener(objecta);
+    OS::inputManager.addlistener(objecta);
 }
 
 void Game::run(){

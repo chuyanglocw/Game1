@@ -10,11 +10,12 @@ InputManager::InputManager(){}
 
 InputManager::~InputManager(){}
 
-void InputManager::addlisener(Object *object){
+void InputManager::addlistener(Object *object){
     objects.push_back(object);
 }
 
-void InputManager::removeListener(Object *object) {
+
+void InputManager::removelistener(Object *object){
     for (int i = 0; i < objects.size(); i++) {
         if (objects[i] == object) {
             // 交换当前元素与最后一个元素
@@ -29,6 +30,7 @@ void InputManager::removeListener(Object *object) {
 }
 
 void InputManager::handleEvent(){
+
     for(int i = 0; i < objects.size(); i++){
         objects[i]->handleEvent();
     }

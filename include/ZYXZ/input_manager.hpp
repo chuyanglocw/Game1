@@ -15,7 +15,7 @@ class InputManager{
     InputManager();
     ~InputManager();
     std::vector<Object *> objects;
-    void addlisener(Object *object);
-    void removelisener(Object *object);
+    void addlistener(Object *object);
+    void removelistener(Object *object);
     void handleEvent();
 };
