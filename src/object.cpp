@@ -17,6 +17,9 @@ void Object::init(){
     objectManager->add(this);
 }
 
+
+void Object::callback(){}
+
 void Object::handleEvent(){}
 
 void Object::dispose(){}

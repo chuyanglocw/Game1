@@ -21,4 +21,5 @@ class ObjectManager{
     void clear();
     void update();
     void draw();
+    void check();
 };

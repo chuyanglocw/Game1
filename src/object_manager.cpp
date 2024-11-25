@@ -42,3 +42,9 @@ void ObjectManager::draw(){
     }
 }
 
+void ObjectManager::check(){
+    for (auto object = objects.begin(); object!= objects.end(); ++object){
+        if(object->second->include <= 0)object->second->restTime--;
+        if(object->second->restTime < 0)remove(object->second);
+    }
+}

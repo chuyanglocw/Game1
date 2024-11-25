@@ -28,6 +28,7 @@ typedef SDL_Texture Texture;
 class ResourceManager;
 class ObjectManager;
 class RenderManager;
+class InputManager;
 
 class OS{
 public:
@@ -38,5 +39,6 @@ public:
     static ResourceManager resourceManager;
     static ObjectManager objectManager;
     static RenderManager renderManager;
+    static InputManager inputManager;
     static void Destroy();
 };
