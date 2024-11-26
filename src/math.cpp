@@ -197,13 +197,14 @@ bool Triangle::isCollide(Vector &v){
     return (u >= 0) && (va >= 0) && (u + va < 1);
 }
 
-
+//TODO: 待优化 以三角形 优化 Polygon 判断是否相交
 //Polygon
 Polygon::Polygon(){}
 
 Polygon::Polygon(std::vector<Vector> points){
     this->points = points;
 }
+
 
 void Polygon::addPoint(Vector v){
     points.push_back(v);

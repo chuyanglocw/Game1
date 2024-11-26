@@ -19,6 +19,7 @@
 #include "render_manager.hpp"
 #include "input_manager.hpp"
 #include "object.hpp"
+#include "button.hpp"
 
 
 class Game{

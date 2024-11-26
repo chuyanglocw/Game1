@@ -56,6 +56,8 @@ class Test2 : public Object{
     void dispose(){}
 };
 
+
+
 // 用于测试 Polygon 类的测试类 继承自 Object 类 用于测试碰撞检测
 class Test3 : public Object{
     public:
@@ -93,6 +95,16 @@ class Test3 : public Object{
     void dispose(){}
 };
 
+// 用于测试 Button 类的测试类 继承自 Button 类 用于测试回调函数 用于测试 事件管理器 处理事件
+class selfButton : public Button{
+    public:
+    selfButton(SDL_Texture *texture, int x, int y, int w, int h, ObjectManager *objectManager) : Button(texture,x,y,w,h,objectManager){}
+    selfButton(ObjectManager *objectManager) : Button(objectManager){}
+    ~selfButton(){}
+    void callback(){
+        std::cout << "Button callback" << std::endl;
+    }
+};
 
 //——————————————————————————————————————————
 
@@ -113,6 +125,11 @@ void Game::init(){
     Test3 *objectc = new Test3(&OS::objectManager);
     objectc->include = 1;
     OS::inputManager.addlistener(objectc);
+
+    selfButton *button = new selfButton(OS::resourceManager.loadTexturePNG("assets/dirt.png"),300,300,100,100,&OS::objectManager);
+    button->include = 1;
+    OS::inputManager.addlistener(button);
+
 }
 
 void Game::run(){
@@ -149,6 +166,7 @@ void Game::render(){
     OS::renderManager.drawTexture(OS::resourceManager.loadTexturePNG("assets/grass.png"),&rect);
     OS::objectManager.get(1)->draw();
     OS::objectManager.get(2)->draw();
+    OS::objectManager.get(3)->draw();
 
     SDL_RenderPresent(OS::renderer);
 }

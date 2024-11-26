@@ -44,6 +44,8 @@ class Vector{
     int getIntY(const float &ex = 1);
 };
 
+//TODO： 添加获得法线的方法
+
 //圆形碰撞检测
 class Circle{
     public:
@@ -76,7 +78,8 @@ class Triangle{
     bool isCollide(Vector &v);
 };
 
-//多边形碰撞检测
+//TODO： 待续完善
+//多边形碰撞检测 
 class Polygon{
     public:
     std::vector<Vector> points;

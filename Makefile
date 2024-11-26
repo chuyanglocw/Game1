@@ -13,6 +13,7 @@ objs/%.o : src/%.cpp
 
 compile : $(objs)
 
+#TODO：发布时请在末尾添加 -mwindows 以去除控制台
 bin/main : $(objs)
 	g++ $^ -o $@ $(libs) $(libs_dir)
 
