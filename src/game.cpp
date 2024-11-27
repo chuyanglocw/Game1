@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "functional"
 // V1代
 Game::Game(){}
 
@@ -98,12 +99,24 @@ class Test3 : public Object{
 // 用于测试 Button 类的测试类 继承自 Button 类 用于测试回调函数 用于测试 事件管理器 处理事件
 class selfButton : public Button{
     public:
+    std::function<void()> onClick;
     selfButton(SDL_Texture *texture, int x, int y, int w, int h, ObjectManager *objectManager) : Button(texture,x,y,w,h,objectManager){}
     selfButton(ObjectManager *objectManager) : Button(objectManager){}
     ~selfButton(){}
     void callback(){
+        
+        if (onClick){
+            onClick();
+        }
         std::cout << "Button callback" << std::endl;
     }
+};
+
+class selfSprite : public Sprite{
+    public:
+    selfSprite(SDL_Texture *texture, int x, int y, int w, int h, ObjectManager *objectManager) : Sprite(texture,x,y,w,h,objectManager){}
+    selfSprite(ObjectManager *objectManager) : Sprite(objectManager){}
+    ~selfSprite(){}
 };
 
 //——————————————————————————————————————————
@@ -126,14 +139,20 @@ void Game::init(){
     objectc->include = 1;
     OS::inputManager.addlistener(objectc);
 
+    selfSprite *sprite;
+    sprite = new selfSprite(OS::resourceManager.loadTexturePNG("assets/frost.png"),400,300,100,100,&OS::objectManager);
+    sprite->include = 1;
+    OS::inputManager.addlistener(sprite);
+
     selfButton *button = new selfButton(OS::resourceManager.loadTexturePNG("assets/dirt.png"),300,300,100,100,&OS::objectManager);
     button->include = 1;
+    button->onClick = [sprite]() ->void{
+        sprite->flipH = !sprite->flipH;
+    };
     OS::inputManager.addlistener(button);
-
 }
 
 void Game::run(){
-    OS::objectManager.clear();
     SDL_Init(SDL_INIT_EVERYTHING);
     TTF_Init();
     init();
@@ -141,6 +160,8 @@ void Game::run(){
     quit();
     dispose();
     TTF_Quit();
+    OS::objectManager.clear();
+    OS::objectManager.print();
     SDL_Quit();
 }
 
@@ -167,6 +188,7 @@ void Game::render(){
     OS::objectManager.get(1)->draw();
     OS::objectManager.get(2)->draw();
     OS::objectManager.get(3)->draw();
+    OS::objectManager.get(4)->draw();
 
     SDL_RenderPresent(OS::renderer);
 }

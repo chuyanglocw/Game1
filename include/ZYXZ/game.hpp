@@ -20,6 +20,7 @@
 #include "input_manager.hpp"
 #include "object.hpp"
 #include "button.hpp"
+#include "sprite.hpp"
 
 
 class Game{

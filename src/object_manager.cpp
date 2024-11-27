@@ -48,3 +48,7 @@ void ObjectManager::check(){
         if(object->second->restTime < 0)remove(object->second);
     }
 }
+
+void ObjectManager::print(){
+    std::cout << "ObjectManager: " << objects.size() << std::endl;
+}

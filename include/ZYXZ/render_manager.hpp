@@ -1,5 +1,10 @@
 #pragma once
 
+/*
+编辑者：初阳LOCW
+最新编写时间：2024.11.27
+*/
+
 #include "common.hpp"
 #include "os.hpp"
 

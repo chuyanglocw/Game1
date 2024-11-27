@@ -2,6 +2,10 @@
 /*
 * common.hpp
 * 一些通用的头文件
+
+编辑者：初阳LOCW
+最新编写时间：2024.11.27
+
 */
 #include <iostream>
 #include <random>
