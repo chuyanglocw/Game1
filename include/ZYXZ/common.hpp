@@ -15,6 +15,8 @@
 #include <unordered_map>
 #include <bitset>
 #include <string>
+#include <functional>
+#include <tuple>
 #include <sstream>
 #include <fstream>
 #include "SDL.h"

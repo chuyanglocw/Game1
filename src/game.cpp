@@ -1,15 +1,15 @@
 #include "game.hpp"
-#include "functional"
+
+
 // V1代
 Game::Game(){}
 
 Game::~Game(){}
 
-
 //用于Test cllback 测试
 Rect rect = {0,0,100,100};
 
-//Test 是用于测试 Object 类的测试类 继承自 Object 类
+//Test 是用于测试 Object 类的测试类 继承自 Object 类———————————这些Test相当于对 游戏中的 游戏对象 添加脚本
 class Test : public Object{
 public:
     Test(ObjectManager *objectManager) : Object(objectManager){}
@@ -99,16 +99,22 @@ class Test3 : public Object{
 // 用于测试 Button 类的测试类 继承自 Button 类 用于测试回调函数 用于测试 事件管理器 处理事件
 class selfButton : public Button{
     public:
-    std::function<void()> onClick;
+    bool isDown = false;
+    Signal<> onDown;
+    Signal<> onUp;
     selfButton(SDL_Texture *texture, int x, int y, int w, int h, ObjectManager *objectManager) : Button(texture,x,y,w,h,objectManager){}
     selfButton(ObjectManager *objectManager) : Button(objectManager){}
     ~selfButton(){}
-    void callback(){
-        
-        if (onClick){
-            onClick();
+    void handleEvent() override{
+        if (OS::event.type == SDL_MOUSEBUTTONDOWN){
+            Vector mousePosition = Vector(OS::event.button.x,OS::event.button.y);
+            if (box->isCollide(mousePosition)) onDown.emit();
+            isDown = true;
         }
-        std::cout << "Button callback" << std::endl;
+        if (isDown && OS::event.type == SDL_MOUSEBUTTONUP){
+            onUp.emit();
+            isDown = false;
+        }
     }
 };
 
@@ -146,10 +152,20 @@ void Game::init(){
 
     selfButton *button = new selfButton(OS::resourceManager.loadTexturePNG("assets/dirt.png"),300,300,100,100,&OS::objectManager);
     button->include = 1;
-    button->onClick = [sprite]() ->void{
-        sprite->flipH = !sprite->flipH;
-    };
+    button->onDown.connect([sprite](){
+        sprite->flipH = true;
+    });
+    button->onUp.connect([sprite](){
+        sprite->flipH = false;
+    });
     OS::inputManager.addlistener(button);
+
+    Signal<bool> signal;
+    signal.connect([sprite](bool a){
+        sprite->flipH = a;
+    });
+    signal.emit(true);
+
 }
 
 void Game::run(){

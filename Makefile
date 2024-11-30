@@ -1,4 +1,4 @@
-
+cxx_std = -std=c++20
 cpps = $(wildcard src/*.cpp)
 objs = $(patsubst src/%.cpp,objs/%.o,$(cpps))
 
@@ -9,13 +9,13 @@ libs = -lSDL2 -lSDL2_image -lSDL2_ttf
 libs_dir = -Lbin
 
 objs/%.o : src/%.cpp
-	g++ -c $< -o $@ $(include_dirs) -fPIC -std=c++11
+	g++ $(cxx_std) -c $< -o $@ $(include_dirs) -fPIC
 
 compile : $(objs)
 
 #TODO：发布时请在末尾添加 -mwindows 以去除控制台
 bin/main : $(objs)
-	g++ $^ -o $@ $(libs) $(libs_dir)
+	g++ $(cxx_std) -o $@ $(libs) $(libs_dir) $^
 
 run : bin/main
 	@$<
