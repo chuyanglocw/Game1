@@ -2,7 +2,7 @@
 
 /*
 编辑者：初阳LOCW
-最新编写时间：2024.11.27
+最新编写时间：2024.11.30
 */
 
 //TODO： 添加精灵的其他功能 和 适配 Altlas 贴图
@@ -21,7 +21,6 @@ class Sprite : public Object{
     public:
     SDL_Texture *texture = nullptr;
     Box *box = nullptr;
-    bool isVisible = true;
     bool flipH = false;
     bool flipV = false;
     double angle = 0;

@@ -10,6 +10,8 @@
 
 class Vector;
 
+class ObjectManager;
+
 //TODO :待完善
 class RenderManager{
     public:
@@ -58,4 +60,6 @@ class RenderManager{
     void drawTexture(Texture *texture, Rect *srcRect, Vector *position, Vector *size, double angle,Point *center, SDL_RendererFlip flip);
 
     void present();
+
+    void renderObjects(ObjectManager *objectManager);
 };

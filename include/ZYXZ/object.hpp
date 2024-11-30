@@ -2,7 +2,7 @@
 
 /*
 编辑者：初阳LOCW
-最新编写时间：2024.11.27
+最新编写时间：2024.11.30
 */
 
 class ObjectManager;
@@ -13,6 +13,8 @@ public:
     double id = -1;
     double include = 0;
     double restTime = 2;
+    bool isEnable = false;
+    bool isVisible = false;
     //double layer = 0; //图
     double first = 0; //优先更新等级
     Object(ObjectManager *objectManager);

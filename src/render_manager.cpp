@@ -1,4 +1,6 @@
 #include "render_manager.hpp"
+#include "object.hpp"
+#include "object_manager.hpp"
 #include "math.hpp"
 
 RenderManager::RenderManager(){}
@@ -238,4 +240,11 @@ void RenderManager::drawTexture(Texture *texture, Rect *srcRect, Vector *positio
 
 void RenderManager::present(){
     SDL_RenderPresent(OS::renderer);
+}
+
+void RenderManager::renderObjects(ObjectManager *objectManager){
+    for (auto object = objectManager->objects.begin(); object != objectManager->objects.end(); ++object){
+        if(object->second->isVisible) object->second->draw();
+        std::cout << object->second->isVisible << std::endl;
+    }
 }

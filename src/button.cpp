@@ -2,6 +2,7 @@
 #include "object.hpp"
 #include "object_manager.hpp"
 #include "math.hpp"
+#include "signal.hpp"
 #include "button.hpp"
 
 Button::Button(SDL_Texture *texture,int x, int y, int w, int h, ObjectManager *objectManager) : Object(objectManager){
@@ -47,12 +48,19 @@ void Button::setTexture(SDL_Texture *texture){
     this->texture = texture;
 }
 
+//最近：修改了实现方法
 void Button::handleEvent(){
-    if(box && OS::event.type == SDL_MOUSEBUTTONDOWN){
+    if(!isDown && box && OS::event.type == SDL_MOUSEBUTTONDOWN){
         Vector mousePos = Vector(OS::event.button.x, OS::event.button.y);
         if(box->isCollide(mousePos)){
+            isDown = true;
+            onDown.emit();
             callback();
         }
+    }
+    if (isDown && OS::event.type == SDL_MOUSEBUTTONUP){
+        isDown = false;
+        onUp.emit();
     }
 }
 

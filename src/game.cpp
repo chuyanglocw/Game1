@@ -160,11 +160,21 @@ void Game::init(){
     });
     OS::inputManager.addlistener(button);
 
-    Signal<bool> signal;
-    signal.connect([sprite](bool a){
-        sprite->flipH = a;
+    // 测试 Button 添加对象 并设置 对象的 include 变量 为 1 表示该对象需要被渲染
+    Button *btn = new Button(OS::resourceManager.loadTexturePNG("assets/dirt.png"),300,500,100,100,&OS::objectManager);
+    btn->include = 1;
+    btn->onDown.connect([sprite](){
+        sprite->flipH = true;
     });
-    signal.emit(true);
+    btn->onUp.connect([sprite](){
+        sprite->flipH = false;
+    });
+    OS::inputManager.addlistener(btn);
+
+    //测试 渲染管理器 对isVisible 变量的影响 并渲染对象
+    //sprite->isVisible = false;
+    
+    
 
 }
 
@@ -201,10 +211,8 @@ void Game::render(){
 
     //测试 渲染管理器 渲染对象 渲染图片
     OS::renderManager.drawTexture(OS::resourceManager.loadTexturePNG("assets/grass.png"),&rect);
-    OS::objectManager.get(1)->draw();
-    OS::objectManager.get(2)->draw();
-    OS::objectManager.get(3)->draw();
-    OS::objectManager.get(4)->draw();
+    //测试 渲染管理器 渲染对象 渲染对象 利用 objectManager 中的 对象管理器 渲染对象
+    OS::renderManager.renderObjects(&OS::objectManager);
 
     SDL_RenderPresent(OS::renderer);
 }
